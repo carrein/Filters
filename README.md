@@ -187,4 +187,5 @@ We can apply the working state to the query parameters by setting the `useQueryP
 
 ## Flowchart
 The flowchart below summarizes the logic management for the policy filter group.
+
 ![A flowchart of the state management of filters](flowchart.png)
