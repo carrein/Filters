@@ -21,7 +21,7 @@ The above requirements dictates the following:
 ## Implementation
 For brevity, we will only discuss the implementation of the `FiltersProvider` here. This Provider encapsulates most of the business logic that powers the `Filters` component. The implementation details of other individual components i.e., `Checkbox`, `Dropdown` and auxiliary helper methods will not be discussed in full.
 
-For this exercise, we will focus on **Policies**. The other filter groups will follow a similar pattern.
+For this exercise, we will focus on the **Policy** filter group. The other filter groups follows a similar pattern.
 
 The actual code implementation is redacted but can be provided on request :)
 
