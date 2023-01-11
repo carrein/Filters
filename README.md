@@ -26,7 +26,7 @@ For this exercise, we will focus on **Policies**. The other filter groups will f
 The actual code implementation is redacted but can be provided on request :)
 
 
-#### 1. Provider pattern:
+### 1. Provider pattern:
 ```
 const IncidentFiltersContext = createContext();
 ```
@@ -38,8 +38,9 @@ We opt for the provider pattern as our state management tool here for the follow
 
 While not shown in this exercise, there are predefined filters outside of the `Filters` component that requires the context of the `FiltersProvider` as well.
 
+---
 
-#### 2. `useQueryParams` hook.
+### 2. `useQueryParams` hook.
 ```
  const [queryParams, setQueryParams] = useQueryParams([
   POLICY_PARAMS_KEY
@@ -64,6 +65,8 @@ export const useQueryParams = (keys = []) => {
 ```
 This hook uses the search parameter of the URL as the source of truth for our filters. It behaves similarily to `useState`. It take an array of parameters key as its initial argument. This array is destructed in the hook and used to match the query parameters. The value retrieved will be the initial state of our policy filter.
 
+---
+
 #### 3. `useQuery` API hooks.
 ```
 const {
@@ -87,6 +90,7 @@ export const PoliciesFilterGroup = () => {
   
 return ...
 ```
+---
 
 ### 4. Creating checkbox options.
 For filters that are sourced from an API, we await for the data to arrive from the API and coalesce this with any initial values from the query parameters. We create an `initPolicies` object that will have a `checked` property to denote if the checkbox is selected or not.
@@ -104,11 +108,15 @@ For filters that are sourced from an API, we await for the data to arrive from t
   );
 ```
 
+---
+
 ### 5. `useImmer` API hook.
 ```
 const [workingPolicyFilters, setWorkingPolicyFilters] = useImmer([]);
 ```
 We leverage [immerJS](https://immerjs.github.io/immer/) library to manage the checkbox state. This library provides a way to immutably transform the checkbox states without without having to drill down deep nested objects.
+
+---
 
 ### 6. `useEffect` hook.
 Once we have our `initPolicies` object properly populated, we can now use it as our initial values for our working state.
@@ -118,6 +126,8 @@ useEffect(() => {
         setWorkingPolicyFilters(initPolicies);
 }, [arePoliciesLoading]);
 ```
+
+---
 
 ### 7. Helper functions.
 At this juncture, we have successfully done the following:
@@ -174,7 +184,9 @@ const {
   } = useIncidentFiltersContext();
 ```
 
-### 9. Applying the filters.
+---
+
+### 8. Applying the filters.
 We can apply the working state to the query parameters by setting the `useQueryParams` hook.
 ```
  const commitWorkingState = () => {
