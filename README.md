@@ -2,21 +2,21 @@
 ![A screenshot of a popover with multiple filter options](filters.png)
 
 ## Overview
-The `Filters` component allows users to apply a set of filters to their results. Multiple filter types can be applied within groups using OR boolean logic, and across groups using AND boolean logic. 
+The `Filters` component allow users to apply a set of filters to their results. Multiple filter types can be applied within groups using OR boolean logic and across groups using AND boolean logic. 
 
-This example is being documented as it provides insight into various React patterns and tradeoffs when building user-facing features.
+This particular example is being documented as it provide insights into various React patterns and tradeoffs when building user facing features.
 
 ## Requirements
 1. Users should be able to toggle individual filters and dropdowns.
-2. Users should be able to toggle an entire group of options.
+2. Users should be able to toggle an entire group of checkboxes.
 3. Users should be able to toggle all options in a dropdown.
 4. Users should be able to clear all filters.
-5. Users should be able to send a link with their applied filters to others. Other users who access that link should see the same filters applied.
-6. Filters should only be applied when the user clicks on an action button i.e., "Apply".
+5. Users should be able to send a link with their applied filters to other users. Users who access said link should see the same filters being applied to their results.
+6. Filters should only be applied when the user clicks on an action item i.e., an "Apply" button.
 
 The above requirements dictates the following:
 1. We need to read from the query parameters from the URL when the page mounts. The URL will act as a form of state when links are shared.
-2. We need to seperate the URL state from the state that the user interacts with. If we simply read and write to the URL on each user event, the results will update on every action.
+2. We need to seperate the URL state from the state that the user interacts with. If we simply read and write to the URL on each user event, the results will update on every user action.
 
 ## Implementation
 For brevity, we will only discuss the implementation of the `FiltersProvider` here. This Provider encapsulates most of the business logic that powers the `Filters` component. The implementation details of other individual components i.e., `Checkbox`, `Dropdown` and auxiliary helper methods will not be discussed in full.
@@ -62,7 +62,7 @@ export const useQueryParams = (keys = []) => {
   return [params, setSearchParams];
 };
 ```
-This hook uses the search parameter of the URL as the source of truth for our filters. It behaves similarily to `useState`. It take an array of parameters key as its initial argument. This array is destructed in the hook and used to match for query parameters. The value of query parameters will be the initial state of our filters.
+This hook uses the search parameter of the URL as the source of truth for our filters. It behaves similarily to `useState`. It take an array of parameters key as its initial argument. This array is destructed in the hook and used to match the query parameters. The value retrieved will be the initial state of our policy filter.
 
 #### 3. `useQuery` API hooks.
 ```
@@ -72,7 +72,9 @@ const {
   error: policiesError
 } = usePoliciesFilter();
 ```
+
 Not all options in the Filters can be determined at compile time (hard-coded). For example, the filter group for policies are sourced by an API call. We use [TanStack Query](https://tanstack.com/query/latest) library to fetch and cache filters populated by an API call. The library also provides helpful abstractions like `isLoading` and `error` which we can use to show intermediate states.
+
 ```
 export const PoliciesFilterGroup = () => {
   const {
